@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,15 +8,15 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#f2f6f5;color:#20312c}
-header{background:#087f5b;color:#fff;text-align:center;padding:25px 14px}
+header{background:#087f5b;color:white;text-align:center;padding:25px 14px}
 header h1{margin:0 0 8px;font-size:28px}
 header p{margin:0;font-size:16px}
 main{max-width:760px;margin:auto;padding:18px 14px 30px}
-#content{margin-top:18px;background:#fff;padding:18px;border-radius:18px;box-shadow:0 4px 16px #0000000c}
+#content{margin-top:18px;background:white;padding:18px;border-radius:18px;box-shadow:0 4px 16px #0000000c}
 h2{text-align:center;margin:5px 0 18px}
 h3{margin:16px 0 8px}
 .stages{display:grid;grid-template-columns:1fr;gap:11px}
-.stage{width:100%;padding:16px 14px;border:1px solid #e4ece8;border-radius:14px;background:#fff;box-shadow:0 3px 10px #0000000a;font-size:17px;text-align:right;cursor:pointer;color:#20312c}
+.stage{width:100%;padding:16px 14px;border:1px solid #e4ece8;border-radius:14px;background:white;box-shadow:0 3px 10px #0000000a;font-size:17px;text-align:right;cursor:pointer;color:#20312c}
 .stage:active{transform:scale(.99);background:#eaf7f1}
 .back{background:#e7f5ee;border-color:#b8e0cd;color:#075b42}
 .muted{text-align:center;color:#66756f;line-height:1.8}
@@ -26,14 +27,18 @@ footer{text-align:center;color:#718078;padding:18px;font-size:13px}
 </style>
 </head>
 <body>
+
 <header>
-  <h1>🇸🇩 مقرراتي السودان</h1>
-  <p>مقرراتك ودروسك في مكان واحد</p>
+<h1>🇸🇩 مقرراتي السودان</h1>
+<p>مقرراتك ودروسك في مكان واحد</p>
 </header>
+
 <main>
-  <section id="content" aria-live="polite"></section>
+<section id="content" aria-live="polite"></section>
 </main>
+
 <footer>© 2026 مقرراتي السودان — نسخة تجريبية</footer>
+
 <script>
 const content = document.getElementById("content");
 
@@ -44,9 +49,31 @@ const stages = {
 };
 
 const subjectsByStage = {
-  primary: ["اللغة العربية","الرياضيات","التربية الإسلامية","اللغة الإنجليزية","العلوم","التربية التقنية"],
-  middle: ["اللغة العربية","الرياضيات","اللغة الإنجليزية","التربية الإسلامية","العلوم","الحاسوب"],
-  secondary: ["اللغة العربية","الرياضيات","اللغة الإنجليزية","التربية الإسلامية","الحاسوب","الفيزياء","الكيمياء"]
+  primary: [
+    "اللغة العربية",
+    "الرياضيات",
+    "التربية الإسلامية",
+    "اللغة الإنجليزية",
+    "العلوم",
+    "التربية التقنية"
+  ],
+  middle: [
+    "اللغة العربية",
+    "الرياضيات",
+    "اللغة الإنجليزية",
+    "التربية الإسلامية",
+    "العلوم",
+    "الحاسوب"
+  ],
+  secondary: [
+    "اللغة العربية",
+    "الرياضيات",
+    "اللغة الإنجليزية",
+    "التربية الإسلامية",
+    "الحاسوب",
+    "الفيزياء",
+    "الكيمياء"
+  ]
 };
 
 function button(label, action, extra="") {
@@ -67,11 +94,21 @@ function showHome() {
 
 function showStage(stageKey) {
   const stage = stages[stageKey];
-  if (!stage) { showHome(); return; }
-  let rows = "";
-  for (let i=1; i<=stage.count; i++) {
-    rows += button(`📚 الصف ${arabicNumber(i)} ${stage.label}`,`showClass('${stageKey}',${i})`);
+
+  if (!stage) {
+    showHome();
+    return;
   }
+
+  let rows = "";
+
+  for (let i = 1; i <= stage.count; i++) {
+    rows += button(
+      `📚 الصف ${arabicNumber(i)} ${stage.label}`,
+      `showClass('${stageKey}',${i})`
+    );
+  }
+
   content.innerHTML = `
     <h2>${stage.title}</h2>
     <p class="muted">اختر الصف الدراسي</p>
@@ -83,17 +120,30 @@ function showStage(stageKey) {
 }
 
 function arabicNumber(n) {
-  return ["الأول","الثاني","الثالث","الرابع","الخامس","السادس"][n-1] || String(n);
+  return [
+    "الأول",
+    "الثاني",
+    "الثالث",
+    "الرابع",
+    "الخامس",
+    "السادس"
+  ][n - 1] || String(n);
 }
 
 function showClass(stageKey, classNumber) {
   const stage = stages[stageKey];
   const subjects = subjectsByStage[stageKey];
+
   content.innerHTML = `
     <h2>📚 الصف ${arabicNumber(classNumber)} ${stage.label}</h2>
     <p class="muted">اختر المادة الدراسية</p>
     <div class="stages">
-      ${subjects.map((subject,index)=>button(`📖 ${subject}`,`showSubject('${stageKey}',${classNumber},${index})`)).join("")}
+      ${subjects.map((subject, index) =>
+        button(
+          `📖 ${subject}`,
+          `showSubject('${stageKey}',${classNumber},${index})`
+        )
+      ).join("")}
       ${button("↩️ العودة للصفوف",`showStage('${stageKey}')`,"back")}
     </div>
   `;
@@ -101,31 +151,59 @@ function showClass(stageKey, classNumber) {
 
 function showSubject(stageKey, classNumber, subjectIndex) {
   const subject = subjectsByStage[stageKey][subjectIndex];
+
   content.innerHTML = `
     <h2>📖 ${subject}</h2>
-    <p class="muted">الصف ${arabicNumber(classNumber)} ${stages[stageKey].label}</p>
+    <p class="muted">
+      الصف ${arabicNumber(classNumber)} ${stages[stageKey].label}
+    </p>
     <div class="stages">
-      ${[1,2,3].map(n=>button(`📘 الدرس ${arabicNumber(n)}`,`showLesson('${stageKey}',${classNumber},${subjectIndex},${n})`)).join("")}
-      ${button("↩️ العودة للمواد",`showClass('${stageKey}',${classNumber})`,"back")}
+      ${[1,2,3].map(n =>
+        button(
+          `📘 الدرس ${arabicNumber(n)}`,
+          `showLesson('${stageKey}',${classNumber},${subjectIndex},${n})`
+        )
+      ).join("")}
+      ${button(
+        "↩️ العودة للمواد",
+        `showClass('${stageKey}',${classNumber})`,
+        "back"
+      )}
     </div>
   `;
 }
 
 function showLesson(stageKey, classNumber, subjectIndex, lessonNumber) {
   const subject = subjectsByStage[stageKey][subjectIndex];
-  const lessonTitle = lessonNumber === 1 ? "مقدمة وتمهيد" : lessonNumber === 2 ? "الفهم والتطبيق" : "مراجعة وتدريب";
+
+  const lessonTitle = lessonNumber === 1
+    ? "مقدمة وتمهيد"
+    : lessonNumber === 2
+      ? "الفهم والتطبيق"
+      : "مراجعة وتدريب";
+
   content.innerHTML = `
     <h2>📘 ${subject}</h2>
-    <p class="muted">الصف ${arabicNumber(classNumber)} ${stages[stageKey].label}</p>
+    <p class="muted">
+      الصف ${arabicNumber(classNumber)} ${stages[stageKey].label}
+    </p>
+
     <div class="lesson-content">
       <h3>الدرس ${arabicNumber(lessonNumber)}: ${lessonTitle}</h3>
-      <p>هذا نموذج تجريبي لمحتوى الدرس في تطبيق مقرراتي. سيتم استبداله بشرح مطابق للكتاب المدرسي المعتمد عند توفر محتوى المنهج.</p>
+
+      <p>
+        مرحباً بك في تطبيق مقرراتي. هذا محتوى تجريبي
+        للدرس، وسيتم استبداله بشرح مطابق للكتاب المدرسي
+        المعتمد عند توفر محتوى المنهج.
+      </p>
+
       <h3>أهداف الدرس</h3>
       <ul>
         <li>التعرف على الفكرة الأساسية للدرس.</li>
-        <li>فهم المصطلحات والمعلومات المهمة.</li>
+        <li>فهم المعلومات والمصطلحات المهمة.</li>
         <li>التدرب على تطبيق ما تعلمه الطالب.</li>
       </ul>
+
       <h3>أسئلة للمراجعة</h3>
       <ol>
         <li>اكتب أهم معلومة تعلمتها في هذا الدرس.</li>
@@ -133,8 +211,13 @@ function showLesson(stageKey, classNumber, subjectIndex, lessonNumber) {
         <li>ما السؤال الذي تريد معرفة إجابته عن الدرس؟</li>
       </ol>
     </div>
+
     <div class="stages" style="margin-top:14px">
-      ${button("↩️ العودة للدروس",`showSubject('${stageKey}',${classNumber},${subjectIndex})`,"back")}
+      ${button(
+        "↩️ العودة للدروس",
+        `showSubject('${stageKey}',${classNumber},${subjectIndex})`,
+        "back"
+      )}
       ${button("🏠 الرئيسية","showHome()","back")}
     </div>
   `;
@@ -142,5 +225,6 @@ function showLesson(stageKey, classNumber, subjectIndex, lessonNumber) {
 
 showHome();
 </script>
+
 </body>
 </html>
